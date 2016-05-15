@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<link rel="stylesheet" href="css/style.css">
+	<title></title>
+</head>
+
+<body>
+<h1><p>Регистрация нового пользователя</p></h1>
+<form method="POST" action="#">
+<div class="main">
+<div class="field">
+	<label>Имя</label>
+		<input type="text" name="Name" placeholder="Имя" pattern="[A-Яа-я]{2,20}" required/>
+</div>
+<div class="field">
+	<label>Фамилия</label>
+		<input type="text" name="Surname" placeholder="Фамилия" pattern="[А-Яа-я]{4,20}" required/>
+</div>
+<div class="field">
+	<label>E-mail</label>
+		<input type="email" name="E-mail" placeholder="E-mail" required/>
+</div>
+<div class="field">
+	<label>Телефон</label>
+		<input type="tel" name="Phone" placeholder="Телефон" pattern="\8\-[0-9]{3}\-[0-9]{3}\-[0-9]{2}\-[0-9]{2}" required/>
+</div>
+<li><input type="submit" value="Отправить"/></li>
+</div>
+</form>
+</body>
+<footer>
+    Лабораторная работа №2. Выполнила Тимофеева Марина
+</footer>
+</html>
