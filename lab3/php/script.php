@@ -2,55 +2,62 @@
 header("Content-Type: text/html; charset=utf-8");
 session_start();
 if($_SERVER['REQUEST_METHOD'] == 'POST') {
-	if ($_SESSION['test'] == $_SERVER['REMOTE_ADDR']) {
-    $name = $_POST['name'];
-	$surname = $_POST['surname'];
-	$email = $_POST['email'];
-	$phone = $_POST['phone'];
+    $name = $surname = $email = $phone = '';
+    $name = $_POST["name"];
+    $surname = $_POST["surname"];
+    $email =  $_POST["email"];
+    $phone = $_POST["phone"];
+	$_SESSION['nameR'] = $_POST["name"];
+	$_SESSION['surnameR'] = $_POST["surname"];
+	$_SESSION['emailR'] = $_POST["email"];
+	$_SESSION['phoneR'] = $_POST["phone"];
 	$_SESSION['error'] = '';
 	$flag = true;
-	$surname = clean($surname);
-	$email = clean($email);
-	$phone = clean($phone);
-	if (!empty($name) && check_length($name, 2, 25))
+	if (!empty($_POST["name"]) || preg_match("[A-Za-zА-Яа-я]{2,20}", $_POST["name"]))
 		{
-			$name = clean($name);
+			$name = substr($_POST["name"],2,20);
+			$name = trim($_POST["name"]);
+			$name = htmlspecialchars(stripslashes($name));
 		}
 	else
 		{
 			$flag = false;
 			$_SESSION['error'] = 'Ошибка! Недопустимое значение в поле Имя';
 		}
-		if (!empty($surname) && check_length($surname, 2, 25))
+		if (!empty($_POST["surname"]) || preg_match("[A-Za-zА-Яа-я]{2,20}", $_POST["surname"]))
 		{
-			$surname = clean($surname);
-		}
+			$surname = substr($_POST["surname"],2,20);
+			$surname = trim($_POST["surname"]);
+			$surname = htmlspecialchars(stripslashes($surname));
+    	}
 	else
 		{
 			$flag = false;
 			$_SESSION['error'] = "Ошибка! Недопустимое значение в поле Фамилия";
 		}
-	if (!empty($_POST["email"]) && filter_var($_POST["email"], FILTER_VALIDATE_EMAIL))
-		{
-	    	$email = clean($_POST["email"]);
-	    }
+	if (!empty($_POST["email"]) || preg_match("[A-z0-9_.-]{1,})@([A-z0-9_.-]{1,}).([A-z]{2,8}", $_POST["email"]))  
+	 {
+        $email = substr($_POST["email"],0,32);
+		$email = htmlspecialchars(stripslashes($email)); 
+     }
 	else 
 		{
 			$flag = false;
-			$_SESSION['error'] = 'Ошибка! Недопустимое значение в поле Email';
+			$_SESSION['error'] = 'Ошибка! Недопустимое значение в поле E-mail';
 		}
-		if(!empty($phone) && check_length($phone, 2, 25))
+		if(!empty($_POST["phone"]) || preg_match("\8\-[0-9]{3}\-[0-9]{3}\-[0-9]{2}\-[0-9]{2}", $_POST["phone"]))
 		{
-			$phone = clean($phone);
+			$phone = substr($_POST["phone"],2,150);
 		}
-	else
+		else
 		{
 			$flag = false; 
-			$_SESSION['error'] = "Ошибка! Недопустимое значение в поле Сообщение";
+			$_SESSION['error'] = "Ошибка! Недопустимое значение в поле Телефон";
 		}
 	if($flag == true)
 		{
-			$fp = fopen('note.txt', 'a+');
+			$_SESSION['error'] = 'Благодарим за регистрацию!'; 
+			$fp = fopen('file.txt', 'a+');
 			fwrite($fp, $name . "\n");
 			fwrite($fp, $surname . "\n");
 			fwrite($fp, $email . "\n");
@@ -58,9 +65,8 @@ if($_SERVER['REQUEST_METHOD'] == 'POST') {
 			fwrite($fp, "\n");
 			fclose($fp);
 		}
-	}
 }
-else {$_SESSION['message'] = 'Ошибка доступа';}
+else {$_SESSION['error'] = 'Ошибка доступа';}
 $back = $_SERVER['HTTP_REFERER'];
 		echo "
 		<html>
@@ -68,16 +74,4 @@ $back = $_SERVER['HTTP_REFERER'];
   		<meta http-equiv='Refresh' content='0; URL=".$_SERVER['HTTP_REFERER']."'>
   		</head>
 		</html>";
-function clean($value = "") {
-    $value = trim($value);
-    $value = stripslashes($value);
-    $value = strip_tags($value);
-    $value = htmlspecialchars($value);
-    return $value;
-}
-function check_length($value = "", $min, $max) {
-    $result = (mb_strlen($value) < $min || mb_strlen($value) > $max);
-    return !$result;
-}
-
 ?>

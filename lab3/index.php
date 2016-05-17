@@ -1,44 +1,52 @@
 <?php
-header("Content-Type: text/html; charset=utf-8");
+header("Content-Type: text/html; charset=utf-8"); 
 session_start();
-$_SESSION['test'] = $_SERVER['REMOTE_ADDR']
+$_SESSION['test'] = $_SERVER['REMOTE_ADDR']; 
 ?>
 <!DOCTYPE html>
 <html>
 <head>
-	<link rel="stylesheet" href="css/style.css">
-	<title></title>
+	<title>Регистрация</title>
+	<meta charset="utf-8" />
+	<link rel="stylesheet" href="css/style.css"/>
 </head>
-
 <body>
-<h1><p>Регистрация нового пользователя</p></h1>
-<form method="POST" action="php/script.php">
-<div class="main">
-<div class="field">
-	<label>Имя</label>
-		<input type="text" name="name" placeholder="Имя" pattern="[A-Яа-я]{2,20}" required/>
+	<header>
+		<h2 class="center text">Регистрация нового пользователя</h2>
+		<p class="center">Введите данные в текстовые поля</p>
+	</header>
+<form action="php/script.php" method="post" action="index.php">
+<div class="center brd">
+	<div>
+		<label class="center">Имя 
+			<ul class="center"><input name="name" type="text" class="pole" id="name" value="<?php echo $_SESSION['nameR']; $_SESSION['nameR'] = '';?>" placeholder="name" pattern="[А-Яа-я]{2,20}" required/></ul>
+		</label>
+	</div>
+	<div>
+		<label class="center">Фамилия
+			<ul class="center"><input name="surname" type="text" class="pole" id="surname" value="<?php echo $_SESSION['surnameR']; $_SESSION['surnameR'] = '';?>" placeholder="surname" pattern="[А-Яа-я]{2,50}" required/></ul>
+		</label>
+	<div>
+		<label class="center">E-mail
+			<ul class="center"><input name="email" type="text" class="pole" id="email" value="<?php echo $_SESSION['emailR']; $_SESSION['emailR'] = '';?>" placeholder="Email" pattern="([A-z0-9_.-]{1,})@([A-z0-9_.-]{1,}).([A-z]{2,8})" required/></ul>
+		</label>
+	</div>
+
+	<div>
+		<label class="center">Телефон
+			<ul class="center"><input name="phone" type="tel" class="pole" id="phone" value="<?php echo $_SESSION['phoneR']; $_SESSION['phoneR'] = '';?>" placeholder="phone" pattern="\8\-[0-9]{3}\-[0-9]{3}\-[0-9]{2}\-[0-9]{2}" required/></ul>
+		</label>
+	</div>
+<p><input type='submit' class="button center" value='Отправить'></p>
 </div>
-<div class="field">
-	<label>Фамилия</label>
-		<input type="text" name="surname" placeholder="Фамилия" pattern="[А-Яа-я]{4,20}" required/>
-</div>
-<div class="field">
-	<label>E-mail</label>
-		<input type="email" name="email" placeholder="E-mail" required/>
-</div>
-<div class="field">
-	<label>Телефон</label>
-		<input type="tel" name="phone" placeholder="Телефон" pattern="\8\-[0-9]{3}\-[0-9]{3}\-[0-9]{2}\-[0-9]{2}" required/>
-</div>
-<li><input type="submit" value="Отправить"/></li>
-<?php 
-echo $_SESSION['message'];
-$_SESSION['message'] = ''; 
-?>
-</div>
+<br>
+      <?php 
+      echo $_SESSION['error'];
+      $_SESSION['error'] = ''; 
+      ?>
 </form>
 </body>
 <footer>
-    Лабораторная работа №2. Выполнила Тимофеева Марина
+    Лабораторная работа №3. Выполнила Тимофеева Марина
 </footer>
 </html>
