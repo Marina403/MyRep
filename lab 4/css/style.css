@@ -1,0 +1,40 @@
+.pole 
+{
+border-radius: 7px; /* Ну то есть для всех углов сразу задается одним значением  */
+}
+body {
+  font-family: Helvetica;
+  font-size: 18px;
+}
+.button {
+  display: inline-block;
+  color: white;
+  text-decoration: none;
+  padding: .5em 2em;
+  outline: none;
+  border-width: 2px 0;
+  border-style: solid none;
+  border-color: #FDBE33 #000 #D77206;
+  border-radius: 6px;
+  background: linear-gradient(#F3AE0F, #E38916) #E38916;
+  transition: 0.2s;
+}
+.center {
+    clear:both; 
+    text-align:left; 
+    line-height:25px;
+    color: green;
+   }
+.brd {
+    float: left;
+   }
+footer {
+    position: fixed; /* Фиксированное положение */
+    left: 0; bottom: 0; /* Левый нижний угол */
+    padding: 10px; /* Поля вокруг текста */
+    background: #39b54a; /* Цвет фона */
+    color: #fff; /* Цвет текста */
+    width: 100%; /* Ширина слоя */
+    font-size:12px;
+    text-align:center;
+   }
